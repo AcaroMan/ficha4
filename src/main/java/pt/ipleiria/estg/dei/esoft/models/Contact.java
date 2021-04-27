@@ -1,5 +1,7 @@
-package pt.ipleiria.estg.dei.esoft;
+package pt.ipleiria.estg.dei.esoft.models;
 import java.util.Date;
+import java.util.Objects;
+
 public class Contact {
     private String firstName;
     private String lastName;
@@ -77,6 +79,23 @@ public class Contact {
         this.email = email;
     }
 
+    public boolean matches(String term) {
+        var termLowerCase = term.toLowerCase();
+        if (termLowerCase.isBlank()) return false;
+
+        if (this.firstName != null && this.firstName.toLowerCase().contains(term)) return true;
+        if (this.lastName != null && this.lastName.toLowerCase().contains(term)) return true;
+        if (this.phone != null && this.phone.toLowerCase().contains(term)) return true;
+        if (this.email != null && this.email.toLowerCase().contains(term)) return true;
+        if (this.birthday != null && this.birthday.toString().contains(term)) return true;
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, birthday, phone, email);
+    }
 
 
 }
